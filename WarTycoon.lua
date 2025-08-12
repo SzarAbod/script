@@ -6543,9 +6543,7 @@ do
             task.wait(0.2)
 
             if crate and crateRemote then
-                pcall(function()
-                    crateRemote:InvokeServer(crate)
-                end)
+                crateRemote:InvokeServer(crate)
             end
         end
 
@@ -6558,7 +6556,10 @@ do
             local crateWorkspace = workspace:WaitForChild('Game Systems'):WaitForChild('Crate Workspace')
 
             for _, crate in pairs(crateWorkspace:GetChildren())do
-                if crate:GetAttribute('Owner') == playersDropdown.Value.Name or blackList[crate] then
+                if crate:GetAttribute('Owner') == playersDropdown.Value.Name then
+                    continue
+                end
+                if blackList[crate] and playersDropdown.Value ~= player then
                     continue
                 end
 
@@ -6649,10 +6650,14 @@ do
                         break
                     end
 
-                    pcall(function()
+                    local success, errorMessage = pcall(function()
                         bringCrates(crate)
                         giveCrates(crate)
                     end)
+
+                    if not success then
+                        warn('szar war tycoon script error :', errorMessage)
+                    end
                 end
             end
         end))
@@ -6758,22 +6763,25 @@ do
                 if rebirthAmount and plr.leaderstats.Rebirths.Value < rebirthAmount then
                     continue
                 end
-
-                pcall(function()
-                    if button:FindFirstChild('Part') then
-                        character:PivotTo(button.Part.CFrame * CFrame.new(0, 5, 0))
-                        firetouchinterest(character.RightLeg, button.Part, 0)
-                    end
-                end)
+                if button:FindFirstChild('Part') then
+                    character:PivotTo(button.Part.CFrame * CFrame.new(0, 7, 0))
+                    firetouchinterest(character.RightLeg, button.Part, 0)
+                    task.wait(0.1)
+                    firetouchinterest(character.RightLeg, button.Part, 1)
+                end
             end
         end
 
         maid:Add(task.spawn(function()
             while true do
-                task.wait(0.5)
+                task.wait(1)
 
                 if autobuyToggle.Value then
-                    pcall(autoBuyUpgrades)
+                    local success, errorMessage = pcall(autoBuyUpgrades)
+
+                    if not success then
+                        warn('szar war tycoon script error :', errorMessage)
+                    end
                 end
             end
         end))
