@@ -6510,13 +6510,11 @@ do
             Searchable = true,
             Default = 1,
             Text = 'Select Player to Teleport',
+            Callback = function()
+                blackList = {}
+                collectorPos = nil
+            end,
         })
-
-        playersDropdown.OnChanged(function()
-            blackList = {}
-            collectorPos = nil
-        end)
-
         local AutoGiveToggle = autoCrateOil:AddToggle('AutoGiveToggle', {
             Text = 'Enable Auto Crate/Oil',
             Default = false,
@@ -6609,7 +6607,7 @@ do
                 return
             end
 
-            local collector = tycoons.getTycoon(targetTeam.Name).Essentials['Oil Collector']
+            local collector = (tycoons.getTycoon(targetTeam.Name).Essentials['Oil Collector'])
 
             if not collectorPos then
                 character:PivotTo(tycoons.getTycoon(targetTeam.Name).Floor.FloorOrigin.CFrame)
@@ -6619,6 +6617,18 @@ do
                     collectorPos = collector:WaitForChild('Crate Collector').Metal.CFrame * CFrame.new(0, 5, 0)
                 else
                     collectorPos = collector:WaitForChild('Part').CFrame * CFrame.new(0, 5, 0)
+                end
+            end
+
+            print(collectorPos)
+            print(collector)
+            print(targetTeam)
+
+            if collector then
+                print(collector.Parent.Parent.Name)
+
+                for _, v in collector:GetChildren()do
+                    print(v)
                 end
             end
             if playersDropdown.Value == player then
@@ -6634,7 +6644,6 @@ do
             task.wait(0.5)
         end
 
-        print(AutoGiveToggle.Value)
         maid:Add(task.spawn(function()
             while true do
                 task.wait(0.1)
