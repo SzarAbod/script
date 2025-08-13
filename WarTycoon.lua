@@ -1,6 +1,34 @@
 local a a={cache={},load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
-end return a.cache[b].c end}do function a.a()local b=(cloneref or clonereference
-or function(b)return b end)local c=b(game:GetService'CoreGui')local d=b(game:
+end return a.cache[b].c end}do function a.a()local b={}b.ClassName='Maid'
+function b.new()return(setmetatable({_tasks={}},b))end function b.isMaid(c)
+return type(c)=='table'and c.ClassName=='Maid'end function b.__index(c,d)if b[d]
+then return b[d]else return c._tasks[d]end end function b.__newindex(c,d,e)if b[
+d]~=nil then error(string.format("Cannot use '%s' as a Maid key",tostring(d)),2)
+end local f=c._tasks local g=f[d]if g==e then return end f[d]=e if g then if
+typeof(g)=='function'then(g)()elseif typeof(g)=='table'then local h=g if type(h.
+Destroy)=='function'then h:Destroy()end elseif typeof(g)=='Instance'then g:
+Destroy()elseif typeof(g)=='thread'then local h if coroutine.running()~=g then h
+=pcall(function()task.cancel(g)end)end if not h then task.defer(function()task.
+cancel(g)end)end elseif typeof(g)=='RBXScriptConnection'then g:Disconnect()end
+end end function b.Add(c,d)if not d then error('Task cannot be false or nil',2)
+end c[#((c._tasks))+1]=d if type(d)=='table'and not d.Destroy then warn(
+'[Maid.Add] - Gave table task without .Destroy\n\n'..debug.traceback())end
+return d end function b.GiveTask(c,d)if not d then error(
+'Task cannot be false or nil',2)end local e=#((c._tasks))+1 c[e]=d if type(d)==
+'table'and not(d).Destroy then warn(
+'[Maid.GiveTask] - Gave table task without .Destroy\n\n'..debug.traceback())end
+return e end function b.GivePromise(c,d)if not d:IsPending()then return d end
+local e=d.resolved(d)local f=c:GiveTask(e)e:Finally(function()c[f]=nil end)
+return e end function b.DoCleaning(c)local d=c._tasks for e,f in d do if typeof(
+f)=='RBXScriptConnection'then d[e]=nil f:Disconnect()end end local e,f=next(d)
+while f~=nil do d[e]=nil if typeof(f)=='function'then(f)()elseif typeof(f)==
+'table'and type((f).Destroy)=='function'then(f):Destroy()elseif typeof(f)==
+'Instance'then f:Destroy()elseif typeof(f)=='thread'then local g if coroutine.
+running()~=f then g=pcall(function()task.cancel(f)end)end if not g then local h=
+f task.defer(function()task.cancel(h)end)end elseif typeof(f)==
+'RBXScriptConnection'then f:Disconnect()end e,f=next(d)end end b.Destroy=b.
+DoCleaning return b end function a.b()local b=(cloneref or clonereference or
+function(b)return b end)local c=b(game:GetService'CoreGui')local d=b(game:
 GetService'Players')local e=b(game:GetService'RunService')local f=b(game:
 GetService'SoundService')local g=b(game:GetService'UserInputService')local h=b(
 game:GetService'TextService')local i=b(game:GetService'Teams')local j=b(game:
@@ -1318,64 +1346,36 @@ function()local ak=L()for al,am in pairs(t)do if am.Type=='Dropdown'and am.
 SpecialType=='Team'then am:SetValues(ak)end end end u:GiveSignal(d.PlayerAdded:
 Connect(aj))u:GiveSignal(d.PlayerRemoving:Connect(aj))u:GiveSignal(i.ChildAdded:
 Connect(ak))u:GiveSignal(i.ChildRemoved:Connect(ak))k().Library=u return u end
-function a.b()local aa=a.load'a'return aa:CreateWindow{Title='My Script',Footer=
+function a.c()local aa=a.load'b'return aa:CreateWindow{Title='My Script',Footer=
 'v1.0.0',ToggleKeybind=Enum.KeyCode.RightControl,Center=true,AutoShow=true}end
-function a.c()local aa=a.load'b'return{main=aa:AddTab('Main','house'),combat=aa:
+function a.d()local aa=a.load'c'return{main=aa:AddTab('Main','house'),combat=aa:
 AddTab('Combat','crosshair'),settings=aa:AddTab('Settings','settings')}end
-function a.d()local aa={}aa.ClassName='Maid'function aa.new()return(
-setmetatable({_tasks={}},aa))end function aa.isMaid(ab)return type(ab)=='table'
-and ab.ClassName=='Maid'end function aa.__index(ab,ac)if aa[ac]then return aa[ac
-]else return ab._tasks[ac]end end function aa.__newindex(ab,ac,ad)if aa[ac]~=nil
-then error(string.format("Cannot use '%s' as a Maid key",tostring(ac)),2)end
-local ae=ab._tasks local af=ae[ac]if af==ad then return end ae[ac]=ad if af then
-if typeof(af)=='function'then(af)()elseif typeof(af)=='table'then local ag=af if
-type(ag.Destroy)=='function'then ag:Destroy()end elseif typeof(af)=='Instance'
-then af:Destroy()elseif typeof(af)=='thread'then local ag if coroutine.running()
-~=af then ag=pcall(function()task.cancel(af)end)end if not ag then task.defer(
-function()task.cancel(af)end)end elseif typeof(af)=='RBXScriptConnection'then af
-:Disconnect()end end end function aa.Add(ab,ac)if not ac then error(
-'Task cannot be false or nil',2)end ab[#((ab._tasks))+1]=ac if type(ac)=='table'
-and not ac.Destroy then warn('[Maid.Add] - Gave table task without .Destroy\n\n'
-..debug.traceback())end return ac end function aa.GiveTask(ab,ac)if not ac then
-error('Task cannot be false or nil',2)end local ad=#((ab._tasks))+1 ab[ad]=ac if
-type(ac)=='table'and not(ac).Destroy then warn(
-'[Maid.GiveTask] - Gave table task without .Destroy\n\n'..debug.traceback())end
-return ad end function aa.GivePromise(ab,ac)if not ac:IsPending()then return ac
-end local ad=ac.resolved(ac)local ae=ab:GiveTask(ad)ad:Finally(function()ab[ae]=
-nil end)return ad end function aa.DoCleaning(ab)local ac=ab._tasks for ad,ae in
-ac do if typeof(ae)=='RBXScriptConnection'then ac[ad]=nil ae:Disconnect()end end
-local ad,ae=next(ac)while ae~=nil do ac[ad]=nil if typeof(ae)=='function'then(ae
-)()elseif typeof(ae)=='table'and type((ae).Destroy)=='function'then(ae):Destroy(
-)elseif typeof(ae)=='Instance'then ae:Destroy()elseif typeof(ae)=='thread'then
-local af if coroutine.running()~=ae then af=pcall(function()task.cancel(ae)end)
-end if not af then local ag=ae task.defer(function()task.cancel(ag)end)end
-elseif typeof(ae)=='RBXScriptConnection'then ae:Disconnect()end ad,ae=next(ac)
-end end aa.Destroy=aa.DoCleaning return aa end function a.e()return game:
-GetService'Players'.LocalPlayer end function a.f()local aa=a.load'e'return
-function()return aa.Character or aa.CharacterAdded:Wait()end end function a.g()
-local aa={}aa.tycoonsFolder=(workspace:WaitForChild'Tycoon':FindFirstChild
-'Tycoons')function aa.getTycoon(ab)return aa.tycoonsFolder:FindFirstChild(ab)end
-function aa.getFloorOrigin(ab)local ac=aa.getTycoon(ab)if not ac then return end
-if not ac:FindFirstChild'Floor'then return end if not ac.Floor:FindFirstChild
-'FloorOrigin'then return end return ac.Floor.FloorOrigin end return aa end
-function a.h()local aa=a.load'f'local ab=a.load'e'local ac=a.load'c'local ad=a.
-load'g'local ae=a.load'd'local af=ae.new()local ag=ac.main:AddRightGroupbox(
-'Teleport','arrow-right-left')ag:AddButton('TeleportBase',{Text=
-'Teleport to your base',Func=function()local ah=aa()local ai=ad.getFloorOrigin(
-ab.Team.Name)ah:PivotTo(ai.CFrame)end})ag:AddButton('TeleportFlag',{Text=
-'Teleport to capture point',Func=function()local ah=aa()local ai=CFrame.new(-506
-,177,-1022)ah:PivotTo(ai)end})local ah=ag:AddDropdown('PlayersTeleportDropdown',
-{SpecialType='Player',Values={},Searchable=true,Default=1,ExcludeLocalPlayer=
-true,Text='Select Player to Teleport'})ag:AddButton('TeleportBase',{Text=
-"Teleport to player's base",Func=function()local ai=ah.Value local aj=aa()local
-ak=ad.getFloorOrigin(ai.Team.Name)aj:PivotTo(ak.CFrame)end})return af end
-function a.i()local aa=game:GetService'ReplicatedStorage'local ab=a.load'f'local
-ac=a.load'e'local ad=a.load'c'local ae=a.load'g'local af=a.load'd'local ag=af.
-new()local ah=ad.main:AddLeftGroupbox('Auto Crate/Oil','barrel')local ai local
-aj=aa.TankCrates.WeldCrate local ak={}local al=1 local am=ah:AddDropdown(
-'PlayersDropdown',{SpecialType='Player',Values={},Searchable=true,Default=1,Text
-='Select Player to Teleport',Callback=function()ak={}ai=nil end})local an=ah:
-AddToggle('AutoGiveToggle',{Text='Enable Auto Crate/Oil',Default=false,Tooltip=
+function a.e()return game:GetService'Players'.LocalPlayer end function a.f()
+local aa=a.load'e'return function()return aa.Character or aa.CharacterAdded:
+Wait()end end function a.g()local aa={}aa.tycoonsFolder=(workspace:WaitForChild
+'Tycoon':FindFirstChild'Tycoons')function aa.getTycoon(ab)return aa.
+tycoonsFolder:FindFirstChild(ab)end function aa.getFloorOrigin(ab)local ac=aa.
+getTycoon(ab)if not ac then return end if not ac:FindFirstChild'Floor'then
+return end if not ac.Floor:FindFirstChild'FloorOrigin'then return end return ac.
+Floor.FloorOrigin end return aa end function a.h()local aa=a.load'a'local ab=a.
+load'f'local ac=a.load'e'local ad=a.load'd'local ae=a.load'g'local af=aa.new()
+local ag=ad.main:AddRightGroupbox('Teleport','arrow-right-left')ag:AddButton(
+'TeleportBase',{Text='Teleport to your base',Func=function()local ah=ab()local
+ai=ae.getFloorOrigin(ac.Team.Name)ah:PivotTo(ai.CFrame)end})ag:AddButton(
+'TeleportFlag',{Text='Teleport to capture point',Func=function()local ah=ab()
+local ai=CFrame.new(-506,177,-1022)ah:PivotTo(ai)end})local ah=ag:AddDropdown(
+'PlayersTeleportDropdown',{SpecialType='Player',Values={},Searchable=true,
+Default=1,ExcludeLocalPlayer=true,Text='Select Player to Teleport'})ag:
+AddButton('TeleportBase',{Text="Teleport to player's base",Func=function()local
+ai=ah.Value local aj=ab()local ak=ae.getFloorOrigin(ai.Team.Name)aj:PivotTo(ak.
+CFrame)end})return af end function a.i()local aa=game:GetService
+'ReplicatedStorage'local ab=a.load'a'local ac=a.load'f'local ad=a.load'e'local
+ae=a.load'd'local af=a.load'g'local ag=ab.new()local ah=ae.main:AddLeftGroupbox(
+'Auto Crate/Oil','barrel')local ai local aj=aa.TankCrates.WeldCrate local ak={}
+local al=1 local am=ah:AddDropdown('PlayersDropdown',{SpecialType='Player',
+Values={},Searchable=true,Default=1,Text='Select Player to Teleport',Callback=
+function()ak={}ai=nil end})local an=ah:AddToggle('AutoGiveToggle',{Text=
+'Enable Auto Crate/Oil',Default=false,Tooltip=
 'Give crates to the selected player'})ah:AddLabel{Text=
 'You: Crates are automatically collected up.',DoesWrap=true}ah:AddLabel{Text=
 'Others: Drop off crates at their oil/crate collector.',DoesWrap=true}local ao=
@@ -1384,25 +1384,25 @@ fireproximityprompt(ao)task.wait(0.2)if ap and aj then aj:InvokeServer(ap)end
 end local function getCrates()if not an.Value then return{}end local ap={}local
 aq=workspace:WaitForChild'Game Systems':WaitForChild'Crate Workspace'for ar,as
 in pairs(aq:GetChildren())do if as:GetAttribute'Owner'==am.Value.Name then
-continue end if ak[as]and am.Value~=ac then continue end table.insert(ap,as)end
-if#ap==0 then local ar=ae.tycoonsFolder:GetChildren()if al>#ar then al=1 else al
-=al+1 end local as=ar[al]if as and as:FindFirstChild'Floor'then local at=ab()at:
+continue end if ak[as]and am.Value~=ad then continue end table.insert(ap,as)end
+if#ap==0 then local ar=af.tycoonsFolder:GetChildren()if al>#ar then al=1 else al
+=al+1 end local as=ar[al]if as and as:FindFirstChild'Floor'then local at=ac()at:
 PivotTo(as.Floor.FloorOrigin.CFrame)end task.wait(1)return getCrates()end return
-ap end local ap=function(ap)local aq=ab()aq:PivotTo(ap.CFrame*CFrame.new(0,4,0))
+ap end local ap=function(ap)local aq=ac()aq:PivotTo(ap.CFrame*CFrame.new(0,4,0))
 ao(ap:FindFirstChild'StealPrompt',ap)ak[ap]=true task.wait(0.3)end local aq=
-function(aq)local ar=ab()local as=am.Value.Team if not as then return end local
-at=ae.getTycoon(as.Name).Essentials['Oil Collector']if not ai then ar:PivotTo(ae
-.getTycoon(as.Name).Floor.FloorOrigin.CFrame)task.wait(1)if am.Value==ac then ai
+function(aq)local ar=ac()local as=am.Value.Team if not as then return end local
+at=af.getTycoon(as.Name).Essentials['Oil Collector']if not ai then ar:PivotTo(af
+.getTycoon(as.Name).Floor.FloorOrigin.CFrame)task.wait(1)if am.Value==ad then ai
 =at:WaitForChild'Crate Collector'.Metal.CFrame*CFrame.new(0,5,0)else ai=at:
-WaitForChild'Part'.CFrame*CFrame.new(0,5,0)end end if am.Value==ac then ar:
+WaitForChild'Part'.CFrame*CFrame.new(0,5,0)end end if am.Value==ad then ar:
 PivotTo(ai)task.wait(0.5)fireproximityprompt(at.CratePromptPart.SellPrompt)else
 ar:PivotTo(ai)task.wait(0.5)aq.DropCrate:FireServer()end task.wait(0.5)end ag:
 Add(task.spawn(function()while true do task.wait(0.1)if not an.Value then
 continue end local ar=getCrates()for as,at in pairs(ar)do if not an.Value then
 break end local ay,az=pcall(function()ap(at)aq(at)end)if not ay then warn(
 'szar war tycoon script error :',az)end end end end))return ag end function a.j(
-)local aa=a.load'f'local ab=a.load'e'local ac=a.load'c'local ad=a.load'g'local
-ae=a.load'd'local af=ae.new()local ag=ac.main:AddLeftGroupbox('Auto Buy',
+)local aa=a.load'a'local ab=a.load'f'local ac=a.load'e'local ad=a.load'd'local
+ae=a.load'g'local af=aa.new()local ag=ad.main:AddLeftGroupbox('Auto Buy',
 'circle-dollar-sign')local ah=ag:AddToggle('AutoBuyToggle',{Text=
 'Enable Auto Buy',Default=false,Tooltip=
 'Automatically buy available tycoon upgrades'})local ai=ag:AddCheckbox(
@@ -1417,8 +1417,8 @@ Text='Skip Operations Buttons',Default=true,Tooltip=
 'Skip clothing/cosmetic buttons'})local an=ag:AddCheckbox('SkipGroup',{Text=
 'Skip Group Buttons',Default=true,Tooltip='Skip group-related buttons'})local ao
 =ag:AddCheckbox('SkipMedalButton',{Text='Skip Medal Buttons',Default=true,
-Tooltip='Skip medal/achievement buttons'})local ap=function()local ap=aa()if not
-ap or not ab.Team then return end local aq=ad.getTycoon(ab.Team.Name)if not aq
+Tooltip='Skip medal/achievement buttons'})local ap=function()local ap=ab()if not
+ap or not ac.Team then return end local aq=ae.getTycoon(ac.Team.Name)if not aq
 then return end local ar=aq:FindFirstChild'UnpurchasedButtons'if not ar then
 return end for as,at in pairs(ar:GetChildren())do if not ah.Value then break end
 if at:GetAttribute'Gamepass'and ai.Value then continue end if at:FindFirstChild
@@ -1426,14 +1426,14 @@ if at:GetAttribute'Gamepass'and ai.Value then continue end if at:FindFirstChild
 then continue end if at:GetAttribute'Reward'and al.Value then continue end if at
 :GetAttribute'Clothing'and am.Value then continue end if at:GetAttribute'Group'
 and an.Value then continue end if at:GetAttribute'MedalButton'and ao.Value then
-continue end local ay=ab local az=at:GetAttribute'RebirthAmount'if az and ay.
+continue end local ay=ac local az=at:GetAttribute'RebirthAmount'if az and ay.
 leaderstats.Rebirths.Value<az then continue end if at:FindFirstChild'Part'then
 ap:PivotTo(at.Part.CFrame*CFrame.new(0,7,0))firetouchinterest(ap.RightLeg,at.
 Part,0)task.wait(0.1)firetouchinterest(ap.RightLeg,at.Part,1)end end end af:Add(
 task.spawn(function()while true do task.wait(0.5)if ah.Value then local aq,ar=
 pcall(ap)if not aq then warn('szar war tycoon script error :',ar)end end end end
-))return af end end local aa=a.load'a'local ab=a.load'c'local ac=a.load'd'local
-ad=ac.new()ad:Add(a.load'h')ad:Add(a.load'i')ad:Add(a.load'j')ab.settings:
+))return af end end local aa=a.load'a'local ab=a.load'b'local ac=a.load'd'local
+ad=aa.new()ad:Add(a.load'h')ad:Add(a.load'i')ad:Add(a.load'j')ac.settings:
 AddLeftGroupbox'Script Control':AddButton('UnloadScript',{Text='Unload Script',
-Tooltip='Completely stop and remove the script',Func=function()ad:Destroy()aa:
-Unload()end})aa.ShowCustomCursor=false aa:Toggle(true)
+Tooltip='Completely stop and remove the script',Func=function()ad:Destroy()ab:
+Unload()end})ab.ShowCustomCursor=false ab:Toggle(true)
