@@ -1320,20 +1320,20 @@ Connect(aj))u:GiveSignal(d.PlayerRemoving:Connect(aj))u:GiveSignal(i.ChildAdded:
 Connect(ak))u:GiveSignal(i.ChildRemoved:Connect(ak))k().Library=u return u end
 function a.b()local aa=a.load'a'return aa:CreateWindow{Title='My Script',Footer=
 'v1.0.0',ToggleKeybind=Enum.KeyCode.RightControl,Center=true,AutoShow=true}end
-function a.c()local aa=a.load'b'return{main=aa:AddTab('Main','house'),settings=
-aa:AddTab('Settings','settings')}end function a.d()local aa={}aa.ClassName=
-'Maid'function aa.new()return(setmetatable({_tasks={}},aa))end function aa.
-isMaid(ab)return type(ab)=='table'and ab.ClassName=='Maid'end function aa.
-__index(ab,ac)if aa[ac]then return aa[ac]else return ab._tasks[ac]end end
-function aa.__newindex(ab,ac,ad)if aa[ac]~=nil then error(string.format(
-"Cannot use '%s' as a Maid key",tostring(ac)),2)end local ae=ab._tasks local af=
-ae[ac]if af==ad then return end ae[ac]=ad if af then if typeof(af)=='function'
-then(af)()elseif typeof(af)=='table'then local ag=af if type(ag.Destroy)==
-'function'then ag:Destroy()end elseif typeof(af)=='Instance'then af:Destroy()
-elseif typeof(af)=='thread'then local ag if coroutine.running()~=af then ag=
-pcall(function()task.cancel(af)end)end if not ag then task.defer(function()task.
-cancel(af)end)end elseif typeof(af)=='RBXScriptConnection'then af:Disconnect()
-end end end function aa.Add(ab,ac)if not ac then error(
+function a.c()local aa=a.load'b'return{main=aa:AddTab('Main','house'),combat=aa:
+AddTab('Combat','crosshair'),settings=aa:AddTab('Settings','settings')}end
+function a.d()local aa={}aa.ClassName='Maid'function aa.new()return(
+setmetatable({_tasks={}},aa))end function aa.isMaid(ab)return type(ab)=='table'
+and ab.ClassName=='Maid'end function aa.__index(ab,ac)if aa[ac]then return aa[ac
+]else return ab._tasks[ac]end end function aa.__newindex(ab,ac,ad)if aa[ac]~=nil
+then error(string.format("Cannot use '%s' as a Maid key",tostring(ac)),2)end
+local ae=ab._tasks local af=ae[ac]if af==ad then return end ae[ac]=ad if af then
+if typeof(af)=='function'then(af)()elseif typeof(af)=='table'then local ag=af if
+type(ag.Destroy)=='function'then ag:Destroy()end elseif typeof(af)=='Instance'
+then af:Destroy()elseif typeof(af)=='thread'then local ag if coroutine.running()
+~=af then ag=pcall(function()task.cancel(af)end)end if not ag then task.defer(
+function()task.cancel(af)end)end elseif typeof(af)=='RBXScriptConnection'then af
+:Disconnect()end end end function aa.Add(ab,ac)if not ac then error(
 'Task cannot be false or nil',2)end ab[#((ab._tasks))+1]=ac if type(ac)=='table'
 and not ac.Destroy then warn('[Maid.Add] - Gave table task without .Destroy\n\n'
 ..debug.traceback())end return ac end function aa.GiveTask(ab,ac)if not ac then
