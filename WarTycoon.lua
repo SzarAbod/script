@@ -1408,32 +1408,32 @@ ae=a.load'd'local af=ae.new()local ag=ac.main:AddLeftGroupbox('Auto Buy',
 'Automatically buy available tycoon upgrades'})local ai=ag:AddCheckbox(
 'SkipGamepass',{Text='Skip Gamepass Buttons',Default=true,Tooltip=
 'Skip buttons that require gamepasses'})local aj=ag:AddCheckbox('SkipMission',{
-Text='Skip Mission Buttons',Default=true,Tooltip=
+Text='Skip Operations Buttons',Default=true,Tooltip=
 'Skip buttons related to missions'})local ak=ag:AddCheckbox('SkipSpinner',{Text=
-'Skip Spinner Buttons',Default=true,Tooltip='Skip spinner/wheel buttons'})local
-al=ag:AddCheckbox('SkipReward',{Text='Skip Reward Buttons',Default=true,Tooltip=
-'Skip reward-based buttons'})local am=ag:AddCheckbox('SkipClothing',{Text=
-'Skip Clothing Buttons',Default=true,Tooltip='Skip clothing/cosmetic buttons'})
-local an=ag:AddCheckbox('SkipGroup',{Text='Skip Group Buttons',Default=true,
-Tooltip='Skip group-related buttons'})local ao=ag:AddCheckbox('SkipMedalButton',
-{Text='Skip Medal Buttons',Default=true,Tooltip='Skip medal/achievement buttons'
-})local ap=function()local ap=aa()if not ap or not ab.Team then return end local
-aq=ad.getTycoon(ab.Team.Name)if not aq then return end local ar=aq:
-FindFirstChild'UnpurchasedButtons'if not ar then return end for as,at in pairs(
-ar:GetChildren())do if not ah.Value then break end if at:GetAttribute'Gamepass'
-and ai.Value then continue end if at:FindFirstChild'Mission'and aj.Value then
-continue end if at:GetAttribute'Spinner'and ak.Value then continue end if at:
-GetAttribute'Reward'and al.Value then continue end if at:GetAttribute'Clothing'
-and am.Value then continue end if at:GetAttribute'Group'and an.Value then
-continue end if at:GetAttribute'MedalButton'and ao.Value then continue end local
-ay=ab local az=at:GetAttribute'RebirthAmount'if az and ay.leaderstats.Rebirths.
-Value<az then continue end if at:FindFirstChild'Part'then ap:PivotTo(at.Part.
-CFrame*CFrame.new(0,7,0))firetouchinterest(ap.RightLeg,at.Part,0)task.wait(0.1)
-firetouchinterest(ap.RightLeg,at.Part,1)end end end af:Add(task.spawn(function()
-while true do task.wait(0.5)if ah.Value then local aq,ar=pcall(ap)if not aq then
-warn('szar war tycoon script error :',ar)end end end end))return af end end
-local aa=a.load'a'local ab=a.load'c'local ac=a.load'd'local ad=ac.new()ad:Add(a.
-load'h')ad:Add(a.load'i')ad:Add(a.load'j')ab.settings:AddLeftGroupbox
-'Script Control':AddButton('UnloadScript',{Text='Unload Script',Tooltip=
-'Completely stop and remove the script',Func=function()ad:Destroy()aa:Unload()
-end})aa.ShowCustomCursor=false aa:Toggle(true)
+'Skip Spinner Rewards Buttons',Default=true,Tooltip='Skip spinner/wheel buttons'
+})local al=ag:AddCheckbox('SkipReward',{Text='Skip Daily Reward Buttons',Default
+=true,Tooltip='Skip reward-based buttons'})local am=ag:AddCheckbox(
+'SkipClothing',{Text='Skip Clothing Buttons',Default=true,Tooltip=
+'Skip clothing/cosmetic buttons'})local an=ag:AddCheckbox('SkipGroup',{Text=
+'Skip Group Buttons',Default=true,Tooltip='Skip group-related buttons'})local ao
+=ag:AddCheckbox('SkipMedalButton',{Text='Skip Medal Buttons',Default=true,
+Tooltip='Skip medal/achievement buttons'})local ap=function()local ap=aa()if not
+ap or not ab.Team then return end local aq=ad.getTycoon(ab.Team.Name)if not aq
+then return end local ar=aq:FindFirstChild'UnpurchasedButtons'if not ar then
+return end for as,at in pairs(ar:GetChildren())do if not ah.Value then break end
+if at:GetAttribute'Gamepass'and ai.Value then continue end if at:FindFirstChild
+'Mission'and aj.Value then continue end if at:GetAttribute'Spinner'and ak.Value
+then continue end if at:GetAttribute'Reward'and al.Value then continue end if at
+:GetAttribute'Clothing'and am.Value then continue end if at:GetAttribute'Group'
+and an.Value then continue end if at:GetAttribute'MedalButton'and ao.Value then
+continue end local ay=ab local az=at:GetAttribute'RebirthAmount'if az and ay.
+leaderstats.Rebirths.Value<az then continue end if at:FindFirstChild'Part'then
+ap:PivotTo(at.Part.CFrame*CFrame.new(0,7,0))firetouchinterest(ap.RightLeg,at.
+Part,0)task.wait(0.1)firetouchinterest(ap.RightLeg,at.Part,1)end end end af:Add(
+task.spawn(function()while true do task.wait(0.5)if ah.Value then local aq,ar=
+pcall(ap)if not aq then warn('szar war tycoon script error :',ar)end end end end
+))return af end end local aa=a.load'a'local ab=a.load'c'local ac=a.load'd'local
+ad=ac.new()ad:Add(a.load'h')ad:Add(a.load'i')ad:Add(a.load'j')ab.settings:
+AddLeftGroupbox'Script Control':AddButton('UnloadScript',{Text='Unload Script',
+Tooltip='Completely stop and remove the script',Func=function()ad:Destroy()aa:
+Unload()end})aa.ShowCustomCursor=false aa:Toggle(true)
